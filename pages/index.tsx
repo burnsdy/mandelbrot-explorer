@@ -1,8 +1,40 @@
+import { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+  const wasmWorkerRef = useRef<Worker | null>();
+  const tsWorkerRef = useRef<Worker | null>();
+
+  const [wasmWorkerMessages, setWasmWorkerMessages] = useState<String[]>([]);
+  const [tsWorkerMessages, setTsWorkerMessages] = useState<String[]>([]);
+
+  useEffect(() => {
+    // From https://webpack.js.org/guides/web-workers/#syntax
+    wasmWorkerRef.current = new Worker(
+      new URL('../src/wasm.worker.ts', import.meta.url)
+    );
+    tsWorkerRef.current = new Worker(
+      new URL('../src/ts.worker.ts', import.meta.url)
+    );
+
+    wasmWorkerRef.current.addEventListener('message', (evt) => {
+      console.log('Message from wasm worker:', evt.data);
+      const newMessages = [...wasmWorkerMessages, evt.data];
+      setWasmWorkerMessages(newMessages);
+    });
+
+    tsWorkerRef.current.addEventListener('message', (evt) => {
+      console.log('Message from TS worker:', evt.data);
+      const newMessages = [...tsWorkerMessages, evt.data];
+      setTsWorkerMessages(newMessages);
+    });
+
+    wasmWorkerRef.current.postMessage({ type: 'start' });
+    tsWorkerRef.current.postMessage({ type: 'start' });
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>

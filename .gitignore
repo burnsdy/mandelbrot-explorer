@@ -1,0 +1,13 @@
+# Ignore files from outer project
+.DS_Store
+node_modules/
+.next/
+
+# Ignore files from wasm-pack
+mandelbrot-generator/target/
+mandelbrot-generator/**/*.rs.bk
+mandelbrot-generator/Cargo.lock
+mandelbrot-generator/bin/
+mandelbrot-generator/pkg/
+mandelbrot-generator/wasm-pack.log
+
