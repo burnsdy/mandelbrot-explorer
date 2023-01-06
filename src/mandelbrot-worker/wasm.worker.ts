@@ -1,12 +1,10 @@
-// Needed to declare this as a module. Also shows that imports
-// function normally in workers.
-import { shared } from './shared';
+import init, { get_tile } from '../../mandelbrot-generator/pkg';
 
 const ctx: Worker = self as unknown as Worker;
 
 async function start() {
   // From https://github.com/wasm-tool/wasm-pack-plugin
-  const { greet, get_rust_data } = await import('../mandelbrot-generator/pkg');
+  const { greet, get_rust_data } = await import('../../mandelbrot-generator/pkg');
   greet();
 
   ctx.postMessage({
@@ -22,3 +20,5 @@ ctx.addEventListener('message', (evt) => {
       return;
   }
 });
+
+ctx.postMessage({ ready: true });
