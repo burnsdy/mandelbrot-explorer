@@ -12,8 +12,6 @@ import { MandelbrotWorker, WorkerController } from "./workerController";
 interface MessageFromWorker { data: { coords: string; pixels: Array<number> } }
 
 export const MandelbrotGridLayer = L.GridLayer.extend({
-    workerController: WorkerController,
-
     initialize: function (workerController: WorkerController) {
         // console.log('initialize');
         // console.log(workerController);
