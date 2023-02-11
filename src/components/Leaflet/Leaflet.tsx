@@ -13,11 +13,16 @@ interface RenderingSettings {
 
 const Leaflet = () => {
     const [config, setConfig] = useState({
-        iterations: 1000,
+        iterations: 200,
         exponent: 2,
         tileSize: 200
     });
 
+    // Height of 733px is highest possible amount to avoid rendering blank pixels
+    // TODO: increase height after blank pixel defect is fixed
+    const smallScreen = window.innerHeight < 733 || window.innerWidth < 870;
+
+    // Move workerRef into GridLayer
     const workerRef = useRef(
         Pool(() => {
             return spawn(
@@ -32,11 +37,13 @@ const Leaflet = () => {
     return (
         <MapContainer
             className={styles.leaflet}
-            center={[0, 0]}
-            zoom={4}
+            center={[-46, 10]}
+            // use zoom of 3 for lg width
+            zoom={smallScreen ? 2 : 3}
             preferCanvas={true}
             attributionControl={false}
             zoomControl={false}
+            doubleClickZoom={undefined}
             maxZoom={64}
             zoomAnimationThreshold={64}
         >

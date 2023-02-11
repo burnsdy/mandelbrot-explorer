@@ -19,6 +19,8 @@ const MandelbrotGridLayer = L.GridLayer.extend({
 
     createTile: function (coords: L.Coords, done: L.DoneCallback): HTMLElement {
         const tile = L.DomUtil.create('canvas', 'mandelbrot-tile');
+        tile.width = 200;
+        tile.height = 200;
         const canvasContext = tile.getContext('2d');
         if (
             !canvasContext ||
@@ -26,8 +28,6 @@ const MandelbrotGridLayer = L.GridLayer.extend({
         ) {
             throw new Error('Failed to get 2D context');
         }
-        tile.width = 200;
-        tile.height = 200;
         const pixelData = this.workerRef.current.queue(
             async (getPixelData: any) => {
                 return getPixelData({
@@ -52,23 +52,9 @@ const MandelbrotGridLayer = L.GridLayer.extend({
     }
 });
 
-// For testing purposes
-const RedGrid = L.GridLayer.extend({
-    createTile: (coords: L.Coords, done: L.DoneCallback) => {
-        var tile = document.createElement('div');
-        tile.innerHTML = [coords.x, coords.y, coords.z].join(', ');
-        tile.style.outline = '1px solid red';
-        setTimeout(function () {
-            done(undefined, tile);
-        }, 500 + Math.random() * 1500);
-        return tile;
-    }
-});
-
 const createGrid = (props: GridLayerProps, context: any) => {
     // @ts-ignore
     return createElementObject(new MandelbrotGridLayer(props), context);
-    // return createElementObject(new RedGrid(), context);
 };
 
 const updateGrid = (

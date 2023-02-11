@@ -24,3 +24,21 @@ a {
         background: black;
     }
 }
+
+/* Override default leaflet z-index values */
+.leaflet-control {
+    z-index: 0 !important;
+}
+
+.leaflet-control {
+    z-index: 0 !important;
+}
+
+.leaflet-pane {
+    z-index: 0 !important;
+}
+
+.leaflet-top,
+.leaflet-bottom {
+    z-index: 0 !important;
+}
