@@ -1,17 +1,9 @@
 import Head from 'next/head';
-import dynamic from 'next/dynamic';
 import IconShelf from '../src/components/IconShelf/IconShelf';
 import ControlsDialog from '../src/components/ControlsDialog/ControlsDialog';
+import MandelbrotRenderer from '../src/components/MandelbrotRenderer/MandelbrotRenderer';
 
-// Import leaflet component dynamically to disable SSR
-const MandelbrotRenderer = dynamic(
-    () => import('../src/components/Leaflet/Leaflet'),
-    {
-        ssr: false
-    }
-);
-
-export default function Home() {
+const Home = () => {
     return (
         <>
             <Head>
@@ -29,4 +21,6 @@ export default function Home() {
             </main>
         </>
     );
-}
+};
+
+export default Home;

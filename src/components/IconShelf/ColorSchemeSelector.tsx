@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import {
     Stack,
     Flex,
@@ -12,20 +13,19 @@ import { IconRefresh } from '@tabler/icons-react';
 import SelectableColorInput from './SelectableColorInput';
 import { NUM_SELECTABLE_COLORS } from '../../utils/constants';
 
-interface ColorSchemeSelectorProps {}
+interface ColorSchemeSelectorProps {
+    colorScheme: string[];
+    setColorScheme: React.Dispatch<React.SetStateAction<string[]>>;
+}
 
-const ColorSchemeSelector: React.FC<ColorSchemeSelectorProps> = ({}) => {
-    const [selectedColor, setSelectedColor] = useState('#FFFFFF');
+const ColorSchemeSelector = ({
+    colorScheme,
+    setColorScheme
+}: ColorSchemeSelectorProps) => {
     const [selectedInput, setSelectedInput] = useState(0);
-    // Replace color scheme with values from state
-    const [colorScheme, setColorScheme] = useState([
-        '#FFFFFF',
-        '#FFFFFF',
-        '#FFFFFF',
-        '#FFFFFF',
-        '#FFFFFF',
-        '#FFFFFF'
-    ]);
+    const [selectedColor, setSelectedColor] = useState(
+        colorScheme[selectedInput]
+    );
 
     const randomColor = () =>
         `#${Math.floor(Math.random() * 16777215).toString(16)}`;

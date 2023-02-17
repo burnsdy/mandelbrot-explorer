@@ -1,4 +1,5 @@
-import { useEffect, MutableRefObject } from 'react';
+import { useRef, useEffect, MutableRefObject } from 'react';
+import { spawn, Pool, Thread, Worker } from 'threads';
 import L from 'leaflet';
 import {
     createElementHook,
@@ -7,14 +8,19 @@ import {
 } from '@react-leaflet/core';
 
 interface GridLayerProps {
-    workerRef: MutableRefObject<any>;
     config: any;
+    colorScheme: string[];
+}
+
+interface RenderingState extends GridLayerProps {
+    workerPool: Pool<any>;
 }
 
 const MandelbrotGridLayer = L.GridLayer.extend({
-    initialize: function ({ workerRef, config }: GridLayerProps) {
-        this.workerRef = workerRef;
+    initialize: function ({ workerPool, config, colorScheme }: RenderingState) {
+        this.workerPool = workerPool;
         this.config = config;
+        this.colorScheme = colorScheme;
     },
 
     createTile: function (coords: L.Coords, done: L.DoneCallback): HTMLElement {
@@ -28,7 +34,7 @@ const MandelbrotGridLayer = L.GridLayer.extend({
         ) {
             throw new Error('Failed to get 2D context');
         }
-        const pixelData = this.workerRef.current.queue(
+        const pixelData = this.workerPool.queue(
             async (getPixelData: any) => {
                 return getPixelData({
                     coords,
@@ -52,24 +58,41 @@ const MandelbrotGridLayer = L.GridLayer.extend({
     }
 });
 
-const createGrid = (props: GridLayerProps, context: any) => {
-    // @ts-ignore
-    return createElementObject(new MandelbrotGridLayer(props), context);
+const createGrid = (renderingState: RenderingState, context: any) => {
+    return createElementObject(
+        // @ts-ignore
+        new MandelbrotGridLayer(renderingState),
+        context
+    );
 };
 
-const updateGrid = (
-    instance: any,
-    props: GridLayerProps,
-    prevProps: GridLayerProps
-) => {
-    // TODO
-};
+// const updateGrid = (
+//     instance: any,
+//     renderingState: RenderingState,
+//     prevRenderingState: RenderingState
+// ) => {};
 
-const useGridElement = createElementHook(createGrid, updateGrid);
+// const useGridElement = createElementHook(createGrid, updateGrid);
+const useGridElement = createElementHook(createGrid);
 
-const GridLayer = (props: GridLayerProps) => {
+const GridLayer = ({ config, colorScheme }: GridLayerProps) => {
+    const workerPool = Pool(() => {
+        return spawn(
+            new Worker(
+                // @ts-ignore
+                new URL('../../wasm-worker/wasm-worker.js', import.meta.url)
+            )
+        );
+    });
+
+    const renderingState = {
+        config,
+        colorScheme,
+        workerPool
+    };
+
     const context = useLeafletContext();
-    const gridRef = useGridElement(props, context);
+    const gridRef = useGridElement(renderingState, context);
 
     useEffect(() => {
         const container = context.layerContainer || context.map;

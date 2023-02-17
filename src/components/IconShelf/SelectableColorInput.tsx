@@ -8,12 +8,12 @@ interface SelectableColorInputProps {
     color: string;
 }
 
-const SelectableColorInput: React.FC<SelectableColorInputProps> = ({
+const SelectableColorInput = ({
     id,
     selected,
     setSelected,
     color
-}) => {
+}: SelectableColorInputProps) => {
     return (
         <ColorSwatch
             color={color}

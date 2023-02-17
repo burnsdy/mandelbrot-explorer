@@ -1,9 +1,24 @@
 import { Title, Text, NumberInput, Flex } from '@mantine/core';
 import { IconCpu } from '@tabler/icons-react';
+import { DEFAULT_ITERATIONS } from '../../utils/constants';
 
-interface IterationsSelectorProps {}
+interface IterationsSelectorProps {
+    iterations: number;
+    setIterations: React.Dispatch<React.SetStateAction<number>>;
+}
 
-const IterationsSelector: React.FC<IterationsSelectorProps> = ({}) => {
+const IterationsSelector = ({
+    iterations,
+    setIterations
+}: IterationsSelectorProps) => {
+    const updateIterations = (value: number | undefined) => {
+        if (value) {
+            setIterations(value);
+        } else {
+            setIterations(DEFAULT_ITERATIONS);
+        }
+    };
+
     return (
         <>
             <Title order={3} align='left'>
@@ -18,7 +33,8 @@ const IterationsSelector: React.FC<IterationsSelectorProps> = ({}) => {
                 <NumberInput
                     icon={<IconCpu />}
                     placeholder='Set number of iterations'
-                    value={200}
+                    value={iterations}
+                    onChange={updateIterations}
                     sx={{
                         justifyContent: 'center',
                         width: '120px'
