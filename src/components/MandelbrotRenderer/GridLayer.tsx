@@ -1,14 +1,15 @@
-import { useRef, useEffect, MutableRefObject } from 'react';
-import { spawn, Pool, Thread, Worker } from 'threads';
+import { useEffect } from 'react';
+import { spawn, Pool, Worker } from 'threads';
 import L from 'leaflet';
 import {
     createElementHook,
     createElementObject,
     useLeafletContext
 } from '@react-leaflet/core';
+import { LEAFLET_TILE_SIZE } from '../../utils/constants';
 
 interface GridLayerProps {
-    config: any;
+    iterations: number;
     colorScheme: string[];
 }
 
@@ -17,9 +18,9 @@ interface RenderingState extends GridLayerProps {
 }
 
 const MandelbrotGridLayer = L.GridLayer.extend({
-    initialize: function ({ workerPool, config, colorScheme }: RenderingState) {
+    initialize: function ({ workerPool, iterations, colorScheme }: RenderingState) {
         this.workerPool = workerPool;
-        this.config = config;
+        this.iterations = iterations;
         this.colorScheme = colorScheme;
     },
 
@@ -34,22 +35,19 @@ const MandelbrotGridLayer = L.GridLayer.extend({
         ) {
             throw new Error('Failed to get 2D context');
         }
-        const pixelData = this.workerPool.queue(
-            async (getPixelData: any) => {
-                return getPixelData({
-                    coords,
-                    maxIterations: this.config.iterations,
-                    exponent: this.config.exponent,
-                    tileSize: this.config.tileSize
-                });
-            }
-        );
+        const pixelData = this.workerPool.queue(async (getPixelData: any) => {
+            return getPixelData({
+                coords,
+                iterations: this.iterations,
+                colorScheme: this.colorScheme
+            });
+        });
         pixelData.then((data: any) => {
             // console.log(data);
             const imageData = new ImageData(
                 Uint8ClampedArray.from(data.pixels),
-                this.config.tileSize,
-                this.config.tileSize
+                LEAFLET_TILE_SIZE,
+                LEAFLET_TILE_SIZE
             );
             canvasContext.putImageData(imageData, 0, 0);
             done(undefined, tile);
@@ -75,7 +73,7 @@ const createGrid = (renderingState: RenderingState, context: any) => {
 // const useGridElement = createElementHook(createGrid, updateGrid);
 const useGridElement = createElementHook(createGrid);
 
-const GridLayer = ({ config, colorScheme }: GridLayerProps) => {
+const GridLayer = ({ iterations, colorScheme }: GridLayerProps) => {
     const workerPool = Pool(() => {
         return spawn(
             new Worker(
@@ -86,7 +84,7 @@ const GridLayer = ({ config, colorScheme }: GridLayerProps) => {
     });
 
     const renderingState = {
-        config,
+        iterations,
         colorScheme,
         workerPool
     };

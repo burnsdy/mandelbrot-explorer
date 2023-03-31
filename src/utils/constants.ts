@@ -1,6 +1,11 @@
 export const NUM_SELECTABLE_COLORS = 6;
-export const DEFAULT_ITERATIONS = 300;
-// TODO: define a default color scheme
-export const DEFAULT_COLOR_SCHEME = [...Array(NUM_SELECTABLE_COLORS)].map(
-    () => '#FFFFFF'
-);
+export const LEAFLET_TILE_SIZE = 200;
+export const DEFAULT_ITERATIONS = 100;
+export const DEFAULT_COLOR_SCHEME = [
+    '#3000db',
+    '#0070cc',
+    '#00b339',
+    '#ccc900',
+    '#db5400',
+    '#db001d'
+];

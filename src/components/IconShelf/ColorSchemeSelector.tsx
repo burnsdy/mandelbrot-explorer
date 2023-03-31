@@ -40,6 +40,10 @@ const ColorSchemeSelector = ({
         setSelectedInput(getNextColorInput(selectedInput));
     };
 
+    useEffect(() => {
+        setSelectedColor(colorScheme[selectedInput]);
+    }, [selectedInput])
+
     return (
         <>
             <Title order={3} align='left'>

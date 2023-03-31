@@ -1,19 +1,14 @@
 import { expose } from 'threads/worker';
 
-expose(async function getTile({ coords, maxIterations, exponent, tileSize }) {
+expose(async function getPixelData({ coords, iterations, colorScheme }) {
     const wasm = await import('../../mandelbrot-generator/pkg');
-    wasm.init();
-    const pixels = wasm.get_tile(
+    const pixels = wasm.get_pixel_data(
         coords.x,
         coords.y,
         coords.z,
-        maxIterations,
-        exponent,
-        tileSize
+        iterations,
+        ...colorScheme
     );
-    // console.log({
-    //     coords: `${coords.x},${coords.y},${coords.z}`
-    // });
     return {
         pixels
     };

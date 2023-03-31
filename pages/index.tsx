@@ -12,7 +12,7 @@ const Home = () => {
                     name='description'
                     content='Explore the mandelbrot set fractal'
                 />
-                <link rel='icon' href='/favicon.ico' />
+                <link rel='icon' href='/mandelbrot.ico' />
             </Head>
             <main>
                 <MandelbrotRenderer />

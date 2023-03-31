@@ -14,19 +14,11 @@ const MandelbrotRenderer = () => {
     });
 
     const iterations = useSelector(selectIterations);
-    // TODO: remove these constants
-    const exponent = 2;
-    const tileSize = 200;
-    const config = {
-        iterations,
-        exponent,
-        tileSize
-    };
     const colorScheme = useSelector(selectColorScheme);
 
     return (
         <Suspense fallback={<Loader />}>
-            <DynamicLeaflet config={config} colorScheme={colorScheme} />
+            <DynamicLeaflet iterations={iterations} colorScheme={colorScheme} />
         </Suspense>
     );
 };
