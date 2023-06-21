@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ActionIcon, Tooltip } from '@mantine/core';
 // import { IconBulb, IconTools } from '@tabler/icons-react';
-import { IconQuestionCircle, IconSettings } from '@tabler/icons-react';
+import { IconInfoCircle, IconSettings } from '@tabler/icons-react';
 import AboutModal from './AboutModal';
 import ToolsModal from './ToolsModal';
 import styles from '../../../styles/IconShelf.module.css';
@@ -18,7 +18,7 @@ const IconShelf = () => {
                     variant='light'
                     onClick={() => setAboutOpened(true)}
                 >
-                    <IconQuestionCircle size={28} />
+                    <IconInfoCircle size={28} />
                 </ActionIcon>
             </Tooltip>
             <Tooltip label='Settings'>
