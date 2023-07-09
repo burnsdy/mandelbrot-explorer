@@ -5,10 +5,10 @@
     "description": "A web application to interactively explore the Mandelbrot set fractal",
     "private": true,
     "scripts": {
-        "dev": "next dev",
-        "prod": "next build && next start",
         "build": "next build",
         "analyze": "ANALYZE=true next build",
+        "dev": "next dev",
+        "prod": "next build && next start",
         "start": "next start",
         "lint": "next lint",
         "format": "prettier —-write ."
@@ -31,9 +31,7 @@
         "react-dom": "18.2.0",
         "react-katex": "^3.0.1",
         "react-leaflet": "^4.2.0",
-        "react-markdown": "^8.0.5",
         "react-redux": "^8.0.5",
-        "remark-math": "^5.1.1",
         "threads": "^1.7.0"
     },
     "devDependencies": {

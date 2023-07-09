@@ -32,7 +32,6 @@ const IterationsSelector = ({
             <Flex justify='center'>
                 <NumberInput
                     icon={<IconCpu />}
-                    placeholder='Set number of iterations'
                     value={iterations}
                     onChange={updateIterations}
                     sx={{

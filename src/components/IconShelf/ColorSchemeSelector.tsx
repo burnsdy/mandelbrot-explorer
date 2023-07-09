@@ -68,7 +68,7 @@ const ColorSchemeSelector = ({
                         Set Color
                     </Button>
                 </Flex>
-                <Group position='center' spacing='xs'>
+                <Group position='center' spacing='xl'>
                     {[...Array(NUM_SELECTABLE_COLORS)].map((e, i) => {
                         return (
                             <SelectableColorInput

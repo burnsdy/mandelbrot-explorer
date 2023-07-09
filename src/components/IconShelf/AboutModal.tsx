@@ -2,6 +2,7 @@ import { Modal, Stack, Space, Title, Text, List, Table } from '@mantine/core';
 import Image from 'next/image';
 import { BlockMath, InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
+import { IconSettings } from '@tabler/icons-react';
 import complexPlane from '../../../public/ComplexPlaneExample.svg';
 import InfoAlert from './InfoAlert';
 import CalcTable from './CalcTable';
@@ -38,8 +39,8 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
                 <Space h='xl' />
                 <Title order={2}>What is the Mandelbrot Set?</Title>
                 <Text>
-                    The interactive graphic shown on-screen is a depiction of
-                    the Mandelbrot set.
+                    The interactive graphic shown on-screen depicts the
+                    Mandelbrot set.
                 </Text>
                 <Text>But what is the Mandelbrot set?</Text>
                 <Text fw={800}>
@@ -57,7 +58,7 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
                         depicted?
                     </List.Item>
                     <List.Item>
-                        What does the equation itself signify and how does it
+                        What does the equation itself mean and how does it
                         produce the graphic?
                     </List.Item>
                 </List>
@@ -157,25 +158,24 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
                 <CalcTable cValue='1' />
                 <Text>
                     As you can see, the output grows at an increasing rate,
-                    towards positive infinity. Other outputs for different{' '}
-                    <InlineMath math='C' /> values may not grow directly towards
-                    positive infinity. For instance, here are the first{' '}
-                    <InlineMath math='5' /> iterations of{' '}
-                    <InlineMath math='C = 1 - 1i' />:
+                    towards positive infinity. Outputs from other complex
+                    numbers may not grow directly towards positive infinity. For
+                    instance, here are the first <InlineMath math='5' />{' '}
+                    iterations of <InlineMath math='C = 1 - 1i' />:
                 </Text>
                 <CalcTable cValue='1 - 1i' />
                 <Text>
-                    Still, it’s clear that the outputs for these{' '}
-                    <InlineMath math='C' /> values are continuously expanding,
-                    or diverging.{' '}
-                    <Text fw={800}>
-                        Complex numbers that diverge are not a part of the
-                        Mandelbrot set.
-                    </Text>
+                    Still, it’s clear that the outputs for these complex numbers
+                    are continuously growing, which is referred to as
+                    “diverging.”{' '}
+                </Text>
+                <Text fw={800}>
+                    Complex numbers that diverge are not part of the Mandelbrot
+                    set.
                 </Text>
                 <Text>
-                    But not all <InlineMath math='C' /> values diverge. Here are
-                    the first <InlineMath math='5' /> iterations for{' '}
+                    But not all complex numbers diverge. Here are the first{' '}
+                    <InlineMath math='5' /> iterations for{' '}
                     <InlineMath math='C = -1.9 + 0i' />, rounded to the nearest
                     hundredth:
                 </Text>
@@ -190,6 +190,132 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
                 <Title order={2}>
                     Comparing Complex Numbers outside the Set
                 </Title>
+                <Text>
+                    Knowing how to classify complex numbers that diverge is the
+                    final piece of context needed to understand the graphic.
+                </Text>
+                <Text>
+                    Fortunately, classifying diverging complex numbers is
+                    intuitive, since it only involves measuring the time it
+                    takes for their outputs to diverge. And this “time to
+                    divergence” for a complex number is defined by its escape
+                    iteration.
+                </Text>
+                <InfoAlert>
+                    The escape iteration of a complex number input is the
+                    iteration where it’s known for certain that the output has
+                    diverged.
+                </InfoAlert>
+                <Text>
+                    Therefore, complex numbers with a greater escape iteration
+                    diverge after complex numbers with a lesser escape
+                    iteration.
+                </Text>
+                <Text>
+                    To identify the escape iteration for a complex number, we
+                    can use a known property of the Mandelbrot set, being that
+                    the Mandelbrot set has an escape radius of{' '}
+                    <InlineMath math='2' />. This means that any output that
+                    leaves the circle of radius <InlineMath math='2' /> around
+                    the complex plane origin will eventually diverge. So, the
+                    escape iteration can be further defined as the first
+                    iteration where the distance from the origin to the output
+                    is greater than <InlineMath math='2' />.
+                </Text>
+                <Text fw={800}>
+                    In short, complex numbers whose outputs diverge can be
+                    compared against each other through comparing their escape
+                    iterations.
+                </Text>
+                <Space h='xl' />
+                <Title order={2}>Generating the Colorful Graphic</Title>
+                <Text>
+                    Now let’s put everything together to understand the graphic.
+                </Text>
+                <Text>
+                    Your screen depicts the complex plane, where every pixel on
+                    the screen corresponds to a complex number in the plane.
+                    Zooming into the graphic adds precision to the complex
+                    numbers visible on screen by increasing their number of
+                    decimal places. For example, moving from two decimal place
+                    numbers like <InlineMath math='1.32 + 5.47i' /> to three
+                    decimal place numbers like{' '}
+                    <InlineMath math='1.324 + 5.471i' />.
+                </Text>
+                <Text>
+                    Each pixel’s complex number is run through the Mandelbrot
+                    set equation, where the equation is iterated until it
+                    reaches the specified maximum number of iterations (else the
+                    equation would continue iterating indefinitely).
+                </Text>
+                <Text>
+                    If the output does not diverge by the maximum iteration,
+                    then this complex number is in the Mandelbrot set. We color
+                    the pixel black to represent this.
+                </Text>
+                <Text>
+                    Otherwise, the complex number diverges before the maximum
+                    iteration, so we instead take note of its escape iteration.
+                </Text>
+                <Text>
+                    We color the pixels of diverging complex numbers based on
+                    the value of their escape iterations, which allows us to
+                    visualize the rate at which each complex number diverges.
+                </Text>
+                <Text
+                    sx={{
+                        display: 'flex',
+                        gap: '4px'
+                    }}
+                >
+                    Check out the Settings <IconSettings /> to set the maximum
+                    iteration and create your own color scheme!
+                </Text>
+                <Space h='xl' />
+                <Title order={2}>Importance of the Set</Title>
+                <Text>But why does any of this matter?</Text>
+                <Text>
+                    If you play around with the graphic, you’ll quickly notice
+                    something unusual that occurs when you zoom into the
+                    perimeter of the set — the odd, bulbous shape of the
+                    Mandelbrot set continually reappears.
+                </Text>
+                <Text>
+                    This self-repeating characteristic of the set is what makes
+                    it a fractal.
+                </Text>
+                <InfoAlert>
+                    A fractal is a geometric shape that exhibits self-similarity
+                    at various scales.
+                </InfoAlert>
+                <Text>
+                    But despite its repetition, the area included in the set at
+                    various scales is wildly unpredictable. This is because the
+                    Mandelbrot set is a chaotic system, as defined by Chaos
+                    theory.
+                </Text>
+                <InfoAlert>
+                    Chaos theory is the study of the dynamics and underlying
+                    patterns of complex systems that are highly sensitive to
+                    initial conditions.
+                </InfoAlert>
+                <Text>
+                    The Mandelbrot set is governed by Chaos theory because it
+                    exhibits seemingly random behavior despite being the result
+                    of a deterministic equation. The set is highly sensitive to
+                    its initial condition, as minute changes to the input
+                    complex number correspond to extreme differences in the
+                    output.
+                </Text>
+                <Text>
+                    These applications of the Mandelbrot set have allowed it to
+                    impact a wide variety of fields. Its fractal geometry has
+                    driven innovation in computer graphics and visualization
+                    technologies, while its complex dynamics have inspired
+                    exploration at the intersection of mathematics and physics.
+                    Lastly, the inherent beauty of the set has served as an
+                    artistic inspiration for many.
+                </Text>
                 <Space h='xl' />
             </Stack>
         </Modal>

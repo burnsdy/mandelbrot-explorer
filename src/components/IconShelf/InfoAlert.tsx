@@ -10,7 +10,9 @@ const InfoAlert = ({ children }: InfoAlertProps) => (
         icon={<IconInfoCircle size='1rem' />}
         variant='outline'
         sx={{
-            backgroundColor: 'inherit'
+            backgroundColor: 'inherit',
+            color: '#0047AB',
+            borderColor: '#0047AB'
         }}
     >
         {children}
