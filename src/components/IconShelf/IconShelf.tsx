@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { ActionIcon, Tooltip } from '@mantine/core';
-// import { IconBulb, IconTools } from '@tabler/icons-react';
 import { IconInfoCircle, IconSettings } from '@tabler/icons-react';
-import AboutModal from './AboutModal';
-import ToolsModal from './ToolsModal';
+import AboutModal from './AboutModal/AboutModal';
+import ToolsModal from './ToolsModal/ToolsModal';
 import styles from '../../../styles/IconShelf.module.css';
 
 const IconShelf = () => {

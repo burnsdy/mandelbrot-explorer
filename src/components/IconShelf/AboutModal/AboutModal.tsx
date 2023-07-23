@@ -1,9 +1,9 @@
-import { Modal, Stack, Space, Title, Text, List, Table } from '@mantine/core';
+import { Modal, Stack, Space, Title, Text, List } from '@mantine/core';
 import Image from 'next/image';
 import { BlockMath, InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 import { IconSettings } from '@tabler/icons-react';
-import complexPlane from '../../../public/ComplexPlaneExample.svg';
+import complexPlane from '../../../../public/complexPlaneExample.svg';
 import InfoAlert from './InfoAlert';
 import CalcTable from './CalcTable';
 
@@ -269,7 +269,7 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
                     }}
                 >
                     Check out the Settings <IconSettings /> to set the maximum
-                    iteration and create your own color scheme!
+                    iterations and create your own color scheme!
                 </Text>
                 <Space h='xl' />
                 <Title order={2}>Importance of the Set</Title>

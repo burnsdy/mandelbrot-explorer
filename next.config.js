@@ -1,8 +1,8 @@
-const WasmPackPlugin = require('@wasm-tool/wasm-pack-plugin');
 const path = require('path');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true'
 });
+const WasmPackPlugin = require('@wasm-tool/wasm-pack-plugin');
 
 module.exports = withBundleAnalyzer({
     webpack(config, { isServer, dev }) {
@@ -11,7 +11,7 @@ module.exports = withBundleAnalyzer({
             layers: true
         };
 
-        // Note: this plugin causes hashes to be appended to the output chunk file names
+        // Plugin appends hashes to output chunk file names
         config.plugins.push(
             new WasmPackPlugin({
                 crateDirectory: path.resolve(

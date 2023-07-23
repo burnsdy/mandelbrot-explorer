@@ -1,15 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
-import { DEFAULT_ITERATIONS, DEFAULT_COLOR_SCHEME } from '../utils/constants';
+import {
+    DEFAULT_MAX_ITERATIONS,
+    DEFAULT_COLOR_SCHEME
+} from '../utils/constants';
 import { AppState } from './store';
 
 interface RenderingSettingsState {
-    iterations: number;
+    maxIterations: number;
     colorScheme: string[];
 }
 
 const initialState: RenderingSettingsState = {
-    iterations: DEFAULT_ITERATIONS,
+    maxIterations: DEFAULT_MAX_ITERATIONS,
     colorScheme: DEFAULT_COLOR_SCHEME
 };
 
@@ -18,7 +21,7 @@ export const renderingSettingsSlice = createSlice({
     initialState,
     reducers: {
         updateSettings: (state, action) => {
-            state.iterations = action.payload.iterations;
+            state.maxIterations = action.payload.maxIterations;
             state.colorScheme = action.payload.colorScheme;
         }
     },
@@ -35,8 +38,8 @@ export const renderingSettingsSlice = createSlice({
 });
 
 export const { updateSettings } = renderingSettingsSlice.actions;
-export const selectIterations = (state: AppState) =>
-    state.renderingSettings.iterations;
+export const selectMaxIterations = (state: AppState) =>
+    state.renderingSettings.maxIterations;
 export const selectColorScheme = (state: AppState) =>
     state.renderingSettings.colorScheme;
 export default renderingSettingsSlice.reducer;

@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Stack, Title, Button, Space } from '@mantine/core';
-import IterationsSelector from './IterationsSelector';
+import MaxIterationsSelector from './MaxIterationsSelector';
 import ColorSchemeSelector from './ColorSchemeSelector';
 import {
-    selectIterations,
+    selectMaxIterations,
     selectColorScheme,
     updateSettings
-} from '../../store/renderingSettingsSlice';
+} from '../../../store/renderingSettingsSlice';
 
 interface ToolsModalProps {
     opened: boolean;
@@ -15,19 +15,19 @@ interface ToolsModalProps {
 }
 
 const ToolsModal = ({ opened, setOpened }: ToolsModalProps) => {
-    const initialIterations = useSelector(selectIterations);
+    const initialMaxIterations = useSelector(selectMaxIterations);
     const initialColorScheme = useSelector(selectColorScheme);
-    // TODO: set errors for iterations outside allowed range
-    const [iterations, setIerations] = useState(initialIterations);
+    // TODO: set errors for max iterations outside allowed range
+    const [maxIterations, setMaxIterations] = useState(initialMaxIterations);
     const [colorScheme, setColorScheme] = useState(initialColorScheme);
 
     const dispatch = useDispatch();
-    const handleApply = () => {
-        dispatch(updateSettings({ iterations, colorScheme }));
+    const applyChanges = () => {
+        dispatch(updateSettings({ maxIterations, colorScheme }));
         setOpened(false);
     };
-    const handleClose = () => {
-        setIerations(initialIterations);
+    const closeModal = () => {
+        setMaxIterations(initialMaxIterations);
         setColorScheme(initialColorScheme);
         setOpened(false);
     };
@@ -37,7 +37,7 @@ const ToolsModal = ({ opened, setOpened }: ToolsModalProps) => {
             title={<Title order={1}>Settings</Title>}
             centered
             opened={opened}
-            onClose={handleClose}
+            onClose={closeModal}
             overflow='inside'
             transition='fade'
             transitionDuration={800}
@@ -45,9 +45,9 @@ const ToolsModal = ({ opened, setOpened }: ToolsModalProps) => {
         >
             <Stack align='left'>
                 <Space h='sm' />
-                <IterationsSelector
-                    iterations={iterations}
-                    setIterations={setIerations}
+                <MaxIterationsSelector
+                    maxIterations={maxIterations}
+                    setMaxIterations={setMaxIterations}
                 />
                 <Space h='md' />
                 <ColorSchemeSelector
@@ -55,7 +55,7 @@ const ToolsModal = ({ opened, setOpened }: ToolsModalProps) => {
                     setColorScheme={setColorScheme}
                 />
                 <Space h='md' />
-                <Button onClick={handleApply}>Apply Changes</Button>
+                <Button onClick={applyChanges}>Apply Changes</Button>
             </Stack>
         </Modal>
     );

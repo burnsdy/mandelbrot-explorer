@@ -1,6 +1,6 @@
 import { Table } from '@mantine/core';
 import { InlineMath } from 'react-katex';
-import { SampleCalc, sampleCalc } from '../../utils/sampleCalculations';
+import { SampleCalc, sampleCalc } from '../../../utils/sampleCalculations';
 
 interface CalcTableProps {
     cValue: string;

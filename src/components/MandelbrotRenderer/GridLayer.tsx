@@ -9,7 +9,7 @@ import {
 import { LEAFLET_TILE_SIZE } from '../../utils/constants';
 
 interface GridLayerProps {
-    iterations: number;
+    maxIterations: number;
     colorScheme: string[];
 }
 
@@ -18,9 +18,13 @@ interface RenderingState extends GridLayerProps {
 }
 
 const MandelbrotGridLayer = L.GridLayer.extend({
-    initialize: function ({ workerPool, iterations, colorScheme }: RenderingState) {
+    initialize: function ({
+        workerPool,
+        maxIterations,
+        colorScheme
+    }: RenderingState) {
         this.workerPool = workerPool;
-        this.iterations = iterations;
+        this.maxIterations = maxIterations;
         this.colorScheme = colorScheme;
     },
 
@@ -38,12 +42,11 @@ const MandelbrotGridLayer = L.GridLayer.extend({
         const pixelData = this.workerPool.queue(async (getPixelData: any) => {
             return getPixelData({
                 coords,
-                iterations: this.iterations,
+                maxIterations: this.maxIterations,
                 colorScheme: this.colorScheme
             });
         });
         pixelData.then((data: any) => {
-            // console.log(data);
             const imageData = new ImageData(
                 Uint8ClampedArray.from(data.pixels),
                 LEAFLET_TILE_SIZE,
@@ -70,10 +73,10 @@ const createGrid = (renderingState: RenderingState, context: any) => {
 //     prevRenderingState: RenderingState
 // ) => {};
 
-// const useGridElement = createElementHook(createGrid, updateGrid);
 const useGridElement = createElementHook(createGrid);
+// const useGridElement = createElementHook(createGrid, updateGrid);
 
-const GridLayer = ({ iterations, colorScheme }: GridLayerProps) => {
+const GridLayer = ({ maxIterations, colorScheme }: GridLayerProps) => {
     const workerPool = Pool(() => {
         return spawn(
             new Worker(
@@ -84,7 +87,7 @@ const GridLayer = ({ iterations, colorScheme }: GridLayerProps) => {
     });
 
     const renderingState = {
-        iterations,
+        maxIterations,
         colorScheme,
         workerPool
     };

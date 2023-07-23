@@ -11,7 +11,7 @@ import {
 } from '@mantine/core';
 import { IconRefresh } from '@tabler/icons-react';
 import SelectableColorInput from './SelectableColorInput';
-import { NUM_SELECTABLE_COLORS } from '../../utils/constants';
+import { NUM_SELECTABLE_COLORS } from '../../../utils/constants';
 
 interface ColorSchemeSelectorProps {
     colorScheme: string[];
@@ -42,7 +42,7 @@ const ColorSchemeSelector = ({
 
     useEffect(() => {
         setSelectedColor(colorScheme[selectedInput]);
-    }, [selectedInput])
+    }, [selectedInput]);
 
     return (
         <>

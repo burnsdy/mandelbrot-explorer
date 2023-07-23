@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { Loader } from '@mantine/core';
 import {
     selectColorScheme,
-    selectIterations
+    selectMaxIterations
 } from '../../store/renderingSettingsSlice';
 
 const MandelbrotRenderer = () => {
@@ -13,12 +13,15 @@ const MandelbrotRenderer = () => {
         ssr: false
     });
 
-    const iterations = useSelector(selectIterations);
+    const maxIterations = useSelector(selectMaxIterations);
     const colorScheme = useSelector(selectColorScheme);
 
     return (
         <Suspense fallback={<Loader />}>
-            <DynamicLeaflet iterations={iterations} colorScheme={colorScheme} />
+            <DynamicLeaflet
+                maxIterations={maxIterations}
+                colorScheme={colorScheme}
+            />
         </Suspense>
     );
 };
