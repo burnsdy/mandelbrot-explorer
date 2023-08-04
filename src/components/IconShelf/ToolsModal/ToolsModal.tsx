@@ -17,7 +17,6 @@ interface ToolsModalProps {
 const ToolsModal = ({ opened, setOpened }: ToolsModalProps) => {
     const initialMaxIterations = useSelector(selectMaxIterations);
     const initialColorScheme = useSelector(selectColorScheme);
-    // TODO: set errors for max iterations outside allowed range
     const [maxIterations, setMaxIterations] = useState(initialMaxIterations);
     const [colorScheme, setColorScheme] = useState(initialColorScheme);
 
@@ -49,12 +48,12 @@ const ToolsModal = ({ opened, setOpened }: ToolsModalProps) => {
                     maxIterations={maxIterations}
                     setMaxIterations={setMaxIterations}
                 />
-                <Space h='md' />
+                <Space h='xl' />
                 <ColorSchemeSelector
                     colorScheme={colorScheme}
                     setColorScheme={setColorScheme}
                 />
-                <Space h='md' />
+                <Space h='xl' />
                 <Button onClick={applyChanges}>Apply Changes</Button>
             </Stack>
         </Modal>

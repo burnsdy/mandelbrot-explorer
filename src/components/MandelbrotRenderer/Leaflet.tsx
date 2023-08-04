@@ -1,7 +1,6 @@
 import { MapContainer } from 'react-leaflet';
 import GridLayer from './GridLayer';
 import styles from '../../../styles/Leaflet.module.css';
-import { Layer } from 'leaflet';
 
 interface LeafletProps {
     maxIterations: number;
@@ -16,6 +15,9 @@ const Leaflet = ({ maxIterations, colorScheme }: LeafletProps) => {
     return (
         <MapContainer
             className={styles.leaflet}
+            style={{
+                backgroundColor: `${colorScheme[0]}`
+            }}
             center={[-46, 10]}
             zoom={smallScreen ? 2 : 3}
             preferCanvas={true}
@@ -24,7 +26,6 @@ const Leaflet = ({ maxIterations, colorScheme }: LeafletProps) => {
             doubleClickZoom={undefined}
             maxZoom={64}
             zoomAnimationThreshold={64}
-            layers={[new Layer()]}
         >
             <GridLayer
                 maxIterations={maxIterations}

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import {
     Stack,
     Flex,
@@ -34,7 +33,7 @@ const ColorSchemeSelector = ({
         i === NUM_SELECTABLE_COLORS - 1 ? 0 : i + 1;
 
     const updateColorScheme = () => {
-        let updatedColorScheme = [...colorScheme];
+        const updatedColorScheme = [...colorScheme];
         updatedColorScheme[selectedInput] = selectedColor;
         setColorScheme(updatedColorScheme);
         setSelectedInput(getNextColorInput(selectedInput));

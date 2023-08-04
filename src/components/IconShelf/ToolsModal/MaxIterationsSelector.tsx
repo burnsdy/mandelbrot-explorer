@@ -32,6 +32,8 @@ const MaxIterationsSelector = ({
             <Flex justify='center'>
                 <NumberInput
                     icon={<IconCpu />}
+                    min={0}
+                    max={2000}
                     value={maxIterations}
                     onChange={updateMaxIterations}
                     sx={{
