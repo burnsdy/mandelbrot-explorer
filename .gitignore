@@ -1,6 +1,7 @@
 # Ignore files from outer project
 .DS_Store
 .next/
+.eslintcache
 node_modules/
 pkg/
 
