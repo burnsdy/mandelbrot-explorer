@@ -31,7 +31,7 @@ const CalcTable = ({ cValue }: CalcTableProps) => {
   };
 
   return (
-    <Table>
+    <Table fontSize='xs'>
       <thead>{calcTableHeader}</thead>
       <tbody>{getCalcTableBody(cValue)}</tbody>
     </Table>

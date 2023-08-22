@@ -1,11 +1,22 @@
-# Ignore files from outer project
+# OS/IDE
 .DS_Store
-.next/
-.eslintcache
+
+# Project
 node_modules/
+.eslintcache
+
+# Build
+.next/
 pkg/
 
-# Ignore files from wasm-pack
+# Test
+coverage/
+.jest-test-results.json
+
+# Logs
+*.log
+
+# wasm-pack
 mandelbrot-generator/target/
 mandelbrot-generator/**/*.rs.bk
 mandelbrot-generator/bin/
