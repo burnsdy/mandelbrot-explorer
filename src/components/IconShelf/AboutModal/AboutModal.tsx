@@ -3,9 +3,10 @@ import Image from 'next/image';
 import { BlockMath, InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 import { IconSettings } from '@tabler/icons-react';
-import complexPlane from '../../../../public/complexPlaneExample.svg';
+import HighlightText from './HighlightText';
 import InfoAlert from './InfoAlert';
 import CalcTable from './CalcTable';
+import complexPlane from '../../../../public/complexPlaneExample.svg';
 
 interface AboutModalProps {
   opened: boolean;
@@ -15,7 +16,11 @@ interface AboutModalProps {
 const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
   return (
     <Modal
-      title={<Title order={1}>{'Explaining the Mandelbrot Set'}</Title>}
+      title={
+        <Title order={3} color='dimmed'>
+          {'Explaining the Mandelbrot Set'}
+        </Title>
+      }
       size='xl'
       centered
       opened={opened}
@@ -42,9 +47,11 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           The interactive graphic shown on-screen depicts the Mandelbrot set.
         </Text>
         <Text>But what is the Mandelbrot set?</Text>
-        <Text fw={800}>
-          The Mandelbrot set is the set of complex numbers that do not diverge
-          after being run through the iterative equation:
+        <Text>
+          <HighlightText>
+            The Mandelbrot set is the set of complex numbers that do not diverge
+            after being run through the iterative equation:
+          </HighlightText>
           <BlockMath math='z_{n+1} = z_n^2 + C' />
         </Text>
         <Text>
@@ -90,10 +97,10 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           <InlineMath math='y' /> axes, the complex plane uses real and
           imaginary axes to plot the real and imaginary components respectively.
         </Text>
-        <Text fw={800}>
+        <HighlightText>
           Because the Mandelbrot set is a collection of complex numbers, it is
           visually depicted on the complex plane.
-        </Text>
+        </HighlightText>
         <Space h='xl' />
         <Title order={2}>Understanding the Equation</Title>
         <Text>
@@ -133,10 +140,10 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           equation that you can pick, since the input <InlineMath math='z_n' />{' '}
           is just the output of the previous iteration.
         </Text>
-        <Text fw={800}>
+        <HighlightText>
           Therefore, the output of the Mandelbrot equation only depends on its
           input complex number.
-        </Text>
+        </HighlightText>
         <Space h='xl' />
         <Title order={2}>Identifying Complex Numbers within the Set</Title>
         <Text>
@@ -158,9 +165,9 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           Still, it’s clear that the outputs for these complex numbers are
           continuously growing, which is referred to as “diverging.”{' '}
         </Text>
-        <Text fw={800}>
+        <HighlightText>
           Complex numbers that diverge are not part of the Mandelbrot set.
-        </Text>
+        </HighlightText>
         <Text>
           But not all complex numbers diverge. Here are the first{' '}
           <InlineMath math='5' /> iterations for{' '}
@@ -202,10 +209,10 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           distance from the origin to the output is greater than{' '}
           <InlineMath math='2' />.
         </Text>
-        <Text fw={800}>
+        <HighlightText>
           In short, complex numbers whose outputs diverge can be compared
           against each other through comparing their escape iterations.
-        </Text>
+        </HighlightText>
         <Space h='xl' />
         <Title order={2}>Generating the Colorful Graphic</Title>
         <Text>
@@ -285,9 +292,9 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           wide variety of fields. Its fractal geometry has driven innovation in
           computer graphics and visualization technologies, while its complex
           dynamics have inspired exploration at the intersection of mathematics
-          and physics. Lastly, the inherent beauty of the set has served as an
-          artistic inspiration for many.
+          and physics.
         </Text>
+        <Text>It’s also just pretty to look at.</Text>
         <Space h='xl' />
       </Stack>
     </Modal>

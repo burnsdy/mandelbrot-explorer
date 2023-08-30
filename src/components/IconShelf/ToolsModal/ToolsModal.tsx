@@ -33,7 +33,11 @@ const ToolsModal = ({ opened, setOpened }: ToolsModalProps) => {
 
   return (
     <Modal
-      title={<Title order={1}>Settings</Title>}
+      title={
+        <Title order={3} color='dimmed'>
+          Settings
+        </Title>
+      }
       centered
       opened={opened}
       onClose={closeModal}
