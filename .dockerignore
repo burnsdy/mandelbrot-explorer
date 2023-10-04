@@ -1,0 +1,25 @@
+# OS/IDE
+.DS_Store
+
+# Project
+node_modules/
+.eslintcache
+
+# Build
+.next/
+pkg/
+
+# Test
+coverage/
+.jest-test-results.json
+
+# Logs
+*.log
+
+# wasm-pack
+mandelbrot-generator/target/
+mandelbrot-generator/**/*.rs.bk
+mandelbrot-generator/bin/
+mandelbrot-generator/pkg/
+mandelbrot-generator/wasm-pack.log
+

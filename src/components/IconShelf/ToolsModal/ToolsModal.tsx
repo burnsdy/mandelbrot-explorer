@@ -35,7 +35,7 @@ const ToolsModal = ({ opened, setOpened }: ToolsModalProps) => {
     <Modal
       title={
         <Title order={3} color='dimmed'>
-          Settings
+          Rendering Settings
         </Title>
       }
       centered
@@ -47,12 +47,12 @@ const ToolsModal = ({ opened, setOpened }: ToolsModalProps) => {
       transitionTimingFunction='ease'
     >
       <Stack align='left'>
-        <Space h='sm' />
+        <Space h='md' />
         <MaxIterationsSelector
           maxIterations={maxIterations}
           setMaxIterations={setMaxIterations}
         />
-        <Space h='xl' />
+        <Space h='md' />
         <ColorSchemeSelector
           colorScheme={colorScheme}
           setColorScheme={setColorScheme}

@@ -41,7 +41,7 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           paddingRight: '20px'
         }}
       >
-        <Space h='xl' />
+        <Space h='md' />
         <Title order={2}>What is the Mandelbrot Set?</Title>
         <Text>
           The interactive graphic shown on-screen depicts the Mandelbrot set.
@@ -67,7 +67,8 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
             graphic?
           </List.Item>
         </List>
-        <Space h='xl' />
+        <Space h='md' />
+        <Space h='md' />
         <Title order={2}>The Complex Plane</Title>
         <Text>
           To answer the first question, a complex number is a number that has
@@ -97,11 +98,12 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           <InlineMath math='y' /> axes, the complex plane uses real and
           imaginary axes to plot the real and imaginary components respectively.
         </Text>
-        <HighlightText>
+        <Text>
           Because the Mandelbrot set is a collection of complex numbers, it is
           visually depicted on the complex plane.
-        </HighlightText>
-        <Space h='xl' />
+        </Text>
+        <Space h='md' />
+        <Space h='md' />
         <Title order={2}>Understanding the Equation</Title>
         <Text>
           Answering the second question is less straightforward, and requires
@@ -121,11 +123,11 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           <InlineMath math='z_{n+1}' /> replaces this input for the next
           iteration, iteration <InlineMath math='n+1' />.
         </Text>
-        <InfoAlert>
+        <Text>
           For the first iteration, the input <InlineMath math='z' /> starts at{' '}
           <InlineMath math='0' />. In other words, <InlineMath math='z_0 = 0' />
           .
-        </InfoAlert>
+        </Text>
         <Text>
           But what about the other input <InlineMath math='C' />?
         </Text>
@@ -144,7 +146,8 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           Therefore, the output of the Mandelbrot equation only depends on its
           input complex number.
         </HighlightText>
-        <Space h='xl' />
+        <Space h='md' />
+        <Space h='md' />
         <Title order={2}>Identifying Complex Numbers within the Set</Title>
         <Text>
           Now we know enough to use the equation. Let’s calculate the first{' '}
@@ -165,9 +168,10 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           Still, it’s clear that the outputs for these complex numbers are
           continuously growing, which is referred to as “diverging.”{' '}
         </Text>
-        <HighlightText>
-          Complex numbers that diverge are not part of the Mandelbrot set.
-        </HighlightText>
+        <Text>
+          As stated before, complex numbers that diverge are not part of the
+          Mandelbrot set.
+        </Text>
         <Text>
           But not all complex numbers diverge. Here are the first{' '}
           <InlineMath math='5' /> iterations for{' '}
@@ -179,7 +183,8 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           Mandelbrot set provided above, you’ll see that the complex number{' '}
           <InlineMath math='C = -1.9 + 0i' /> is in the set!
         </Text>
-        <Space h='xl' />
+        <Space h='md' />
+        <Space h='md' />
         <Title order={2}>Comparing Complex Numbers outside the Set</Title>
         <Text>
           Knowing how to classify complex numbers that diverge is the final
@@ -213,7 +218,8 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           In short, complex numbers whose outputs diverge can be compared
           against each other through comparing their escape iterations.
         </HighlightText>
-        <Space h='xl' />
+        <Space h='md' />
+        <Space h='md' />
         <Title order={2}>Generating the Colorful Graphic</Title>
         <Text>
           Now let’s put everything together to understand the graphic.
@@ -255,7 +261,8 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           Check out the Settings <IconSettings /> to set the maximum iterations
           and create your own color scheme!
         </Text>
-        <Space h='xl' />
+        <Space h='md' />
+        <Space h='md' />
         <Title order={2}>Importance of the Set</Title>
         <Text>But why does any of this matter?</Text>
         <Text>
@@ -295,7 +302,7 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           and physics.
         </Text>
         <Text>It’s also just pretty to look at.</Text>
-        <Space h='xl' />
+        <Space h='md' />
       </Stack>
     </Modal>
   );
