@@ -2,8 +2,10 @@
 .DS_Store
 
 # Project
-node_modules/
 .eslintcache
+.git/
+.gitignore
+node_modules/
 
 # Build
 .next/
@@ -22,4 +24,3 @@ mandelbrot-generator/**/*.rs.bk
 mandelbrot-generator/bin/
 mandelbrot-generator/pkg/
 mandelbrot-generator/wasm-pack.log
-

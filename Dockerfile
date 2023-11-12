@@ -1,4 +1,5 @@
-FROM alpine:3.16
+# Stage 1: Build App
+FROM alpine:3.16 AS build
 
 RUN set -x \
     && apk update \
@@ -6,7 +7,7 @@ RUN set -x \
 
 RUN set -x \
     # See GitHub discussion about Rust Alpine container bug: https://github.com/rust-lang/rust/issues/115450#issuecomment-1717228111
-    && apk add --no-cache openssl-dev musl-dev gcc nodejs npm curl \
+    && apk add --no-cache openssl-dev musl-dev gcc nodejs yarn curl \
     && curl https://sh.rustup.rs -sSf -o rustup.rs.sh \
     && /bin/sh ./rustup.rs.sh -y
 
@@ -25,12 +26,44 @@ RUN set -x \
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY package.json yarn.lock ./
 
-RUN npm install
+RUN yarn install --ignore-scripts --frozen-lockfile
 
 COPY . .
 
+RUN yarn build
+
+
+
+# Stage 2: Production Dependencies
+FROM alpine:3.16 AS deps
+
+RUN set -x \
+    && apk add --no-cache nodejs yarn
+
+WORKDIR /usr/src/app
+
+COPY package.json yarn.lock ./
+
+RUN yarn install --ignore-scripts --frozen-lockfile --production
+
+
+
+# Stage 3: Production App
+FROM alpine:3.16
+
+RUN set -x \
+    && apk add --no-cache nodejs yarn
+
+WORKDIR /usr/src/app
+
+COPY package.json ./
+
+COPY --from=build /usr/src/app/.next ./.next
+
+COPY --from=deps /usr/src/app/node_modules ./node_modules
+
 EXPOSE 3000
 
-CMD [ "npm", "run", "start:prod" ]
+CMD [ "yarn", "start" ]
