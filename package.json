@@ -37,6 +37,8 @@
     "threads": "^1.7.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.8.1",
+    "@commitlint/config-conventional": "^17.8.1",
     "@next/bundle-analyzer": "^13.1.5",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",

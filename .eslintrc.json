@@ -2,7 +2,7 @@
   "extends": ["next/core-web-vitals", "prettier"],
   "overrides": [
     {
-      "files": ["jest.config.js"],
+      "files": ["commitlint.config.js", "jest.config.js"],
       "parser": "espree",
       "parserOptions": {
         "ecmaVersion": "latest"
