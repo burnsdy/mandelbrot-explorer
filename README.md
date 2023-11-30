@@ -1,6 +1,6 @@
 # The Mandelbrot Explorer
 
-## <!-- Include labels: ci, others -->
+<!-- Include labels: ci, others -->
 
 ![The Mandelbrot set fractal rendered with a customized color scheme](public/AppScreenshot1.png)
 
