@@ -24,3 +24,6 @@ mandelbrot-generator/**/*.rs.bk
 mandelbrot-generator/bin/
 mandelbrot-generator/pkg/
 mandelbrot-generator/wasm-pack.log
+
+# Ignore generated credentials from google-github-actions/auth
+gha-creds-*.json
