@@ -6,7 +6,7 @@ import { IconSettings } from '@tabler/icons-react';
 import HighlightText from './HighlightText';
 import InfoAlert from './InfoAlert';
 import CalcTable from './CalcTable';
-import complexPlane from '../../../../public/complexPlaneExample.svg';
+import complexPlane from 'public/complexPlaneExample.svg';
 
 interface AboutModalProps {
   opened: boolean;
