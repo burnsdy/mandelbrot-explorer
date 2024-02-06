@@ -2,7 +2,7 @@
 
 <!-- Include labels: ci, others -->
 
-![The Mandelbrot set fractal rendered with a customized color scheme](public/AppScreenshot1.png)
+![The Mandelbrot set fractal rendered with a customized color scheme](public/images/app-screenshot.png)
 
 > A web application to traverse the Mandelbrot set fractal
 

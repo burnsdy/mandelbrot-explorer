@@ -9,7 +9,7 @@ const Home = () => {
       <Head>
         <title>Mandelbrot Explorer</title>
         <meta name='description' content='Explore the mandelbrot set fractal' />
-        <link rel='icon' href='public/mandelbrot.ico' />
+        <link rel='icon' href='images/favicon.ico' />
       </Head>
       <main>
         <MandelbrotRenderer />
