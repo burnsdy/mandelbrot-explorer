@@ -10,7 +10,7 @@ on:
 
 env:
   REGION: us-east4
-  GAR_LOCATION: us-east4-docker.pkg.dev/mandelbrot-explorer-403805/mandelbrot-explorer-repo1/
+  GAR_LOCATION: us-east4-docker.pkg.dev/mandelbrot-explorer-403805/repo1/mandelbrot-explorer-app
 
 jobs:
   build-push-artifact:
@@ -27,15 +27,16 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Display Google Cloud environment information
-        run: gcloud info
+      # Helpful for debugging
+      # - name: Display Google Cloud environment information
+      #   run: gcloud info
 
       - name: Configure Docker authentication to Artifact Registry
         run: |
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
       - name: Build image
-        run: docker build . --tag ${{ env.GAR_LOCATION }}
+        run: docker build -t ${{ env.GAR_LOCATION }}:${{ github.sha }} .
 
       - name: Push image
-        run: docker push ${{ env.GAR_LOCATION }}
+        run: docker push ${{ env.GAR_LOCATION }}:${{ github.sha }}
