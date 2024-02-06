@@ -10,7 +10,7 @@ on:
 
 env:
   REGION: us-east4
-  GAR_LOCATION: us-east4-docker.pkg.dev/mandelbrot-explorer-403805/mandelbrot-explorer-repo1
+  GAR_LOCATION: us-east4-docker.pkg.dev/mandelbrot-explorer-403805/mandelbrot-explorer-repo1/
 
 jobs:
   build-push-artifact:
