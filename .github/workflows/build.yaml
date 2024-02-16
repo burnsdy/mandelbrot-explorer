@@ -1,16 +1,6 @@
 name: Build and Push to Artifact Registry
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
-env:
-  REGION: us-east4
-  GAR_LOCATION: us-east4-docker.pkg.dev/mandelbrot-explorer-403805/repo1/mandelbrot-explorer-app
+on: workflow_dispatch
 
 jobs:
   build-push-artifact:
@@ -31,12 +21,14 @@ jobs:
       # - name: Display Google Cloud environment information
       #   run: gcloud info
 
+      # Or can docker/login-action@v3, see https://cloud.google.com/blog/products/devops-sre/deploy-to-cloud-run-with-github-actions
       - name: Configure Docker authentication to Artifact Registry
         run: |
-          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+          gcloud auth configure-docker ${{ vars.GCLOUD_REGION }}-docker.pkg.dev --quiet
 
+      # Or use docker/build-push-action@v3, see https://cloud.google.com/blog/products/devops-sre/deploy-to-cloud-run-with-github-actions
       - name: Build image
-        run: docker build -t ${{ env.GAR_LOCATION }}:${{ github.sha }} .
+        run: docker build -t ${{ vars.GCLOUD_GAR_LOCATION }}:${{ github.sha }} .
 
       - name: Push image
-        run: docker push ${{ env.GAR_LOCATION }}:${{ github.sha }}
+        run: docker push ${{ vars.GCLOUD_GAR_LOCATION }}:${{ github.sha }}
