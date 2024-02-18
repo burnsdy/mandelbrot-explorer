@@ -1,6 +1,12 @@
 name: Build and Push to Artifact Registry
 
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      main
+  pull_request:
+    branches:
+      main
 
 jobs:
   build-push-artifact:
@@ -9,7 +15,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - id: auth
+      - name: Authenticate to Google Cloud
+        id: auth
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCLOUD_SA_KEY }}
@@ -22,13 +29,15 @@ jobs:
       #   run: gcloud info
 
       # Or can docker/login-action@v3, see https://cloud.google.com/blog/products/devops-sre/deploy-to-cloud-run-with-github-actions
-      - name: Configure Docker authentication to Artifact Registry
+      - name: Authenticate Docker to Artifact Registry
         run: |
           gcloud auth configure-docker ${{ vars.GCLOUD_REGION }}-docker.pkg.dev --quiet
 
       # Or use docker/build-push-action@v3, see https://cloud.google.com/blog/products/devops-sre/deploy-to-cloud-run-with-github-actions
       - name: Build image
-        run: docker build -t ${{ vars.GCLOUD_GAR_LOCATION }}:${{ github.sha }} .
+        run: |
+          docker build -t ${{ vars.GCLOUD_REGION }}-docker.pkg.dev/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REPO }}/${{ vars.GCLOUD_SERVICE_NAME }}:${{ github.sha }} .
 
       - name: Push image
-        run: docker push ${{ vars.GCLOUD_GAR_LOCATION }}:${{ github.sha }}
+        run: |
+          docker push ${{ vars.GCLOUD_REGION }}-docker.pkg.dev/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REPO }}/${{ vars.GCLOUD_SERVICE_NAME }}:${{ github.sha }}
