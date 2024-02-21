@@ -6,6 +6,7 @@ import { IconSettings } from '@tabler/icons-react';
 import HighlightText from './HighlightText';
 import InfoAlert from './InfoAlert';
 import CalcTable from './CalcTable';
+import ComplexPlaneSvg from 'public/complex-plane-example.svg';
 
 interface AboutModalProps {
   opened: boolean;
@@ -79,7 +80,7 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
           this number, we can graph it on the complex plane:
         </Text>
         <Image
-          src='images/complex-plane-example.svg'
+          src={ComplexPlaneSvg}
           alt='Complex number 3 + 4i plotted on the complex plane.'
           style={{
             alignSelf: 'center',
