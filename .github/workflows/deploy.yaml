@@ -1,0 +1,28 @@
+name: Deploy to Google Cloud Run
+
+on:
+  workflow_run:
+    workflows:
+      - Build and Push to Artifact Registry
+    types:
+      - completed
+
+jobs:
+  deploy-app:
+    runs-on: ubuntu-latest
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          service: ${{ vars.GCLOUD_SERVICE_NAME }}
+          region: ${{ vars.GCLOUD_REGION }}
+          image: ${{ vars.GCLOUD_REGION }}-docker.pkg.dev/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REPO }}/${{ vars.GCLOUD_SERVICE_NAME }}:${{ github.sha }}
+          env_vars: |
+           NODE_ENV=production
+
+      - name: Log app URL
+        run: echo ${{ steps.deploy.outputs.url }}

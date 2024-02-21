@@ -1,16 +1,21 @@
 name: Build and Push to Artifact Registry
 
 on:
+  workflow_run:
+    workflows:
+      - Test Application
+    types:
+      - completed
   push:
-    branches:
-      main
-  pull_request:
     branches:
       main
 
 jobs:
   build-push-artifact:
     runs-on: ubuntu-latest
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
