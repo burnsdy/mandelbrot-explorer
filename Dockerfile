@@ -64,6 +64,8 @@ COPY --from=build /usr/src/app/.next ./.next
 
 COPY --from=deps /usr/src/app/node_modules ./node_modules
 
-EXPOSE 3000
+ENV PORT 8080
+
+EXPOSE $PORT
 
 CMD [ "yarn", "start" ]
