@@ -6,7 +6,6 @@ on:
       - Test App
     types:
       - completed
-  push:
     branches:
       main
 
