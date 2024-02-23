@@ -1,9 +1,9 @@
-name: Build and Push to Artifact Registry
+name: Build and Deploy
 
 on:
   workflow_run:
     workflows:
-      - Test Application
+      - Test App
     types:
       - completed
   push:
@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
 
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    env:
+      DOCKER_IMAGE_NAME: ${{ vars.GCLOUD_REGION }}-docker.pkg.dev/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REPO }}/${{ vars.GCLOUD_SERVICE_NAME }}:${{ github.sha }}
 
     steps:
       - name: Checkout repository
@@ -33,7 +36,7 @@ jobs:
       # - name: Display Google Cloud environment information
       #   run: gcloud info
 
-      # Or can docker/login-action@v3, see https://cloud.google.com/blog/products/devops-sre/deploy-to-cloud-run-with-github-actions
+      # Or use docker/login-action@v3, see https://cloud.google.com/blog/products/devops-sre/deploy-to-cloud-run-with-github-actions
       - name: Authenticate Docker to Artifact Registry
         run: |
           gcloud auth configure-docker ${{ vars.GCLOUD_REGION }}-docker.pkg.dev --quiet
@@ -41,8 +44,21 @@ jobs:
       # Or use docker/build-push-action@v3, see https://cloud.google.com/blog/products/devops-sre/deploy-to-cloud-run-with-github-actions
       - name: Build image
         run: |
-          docker build -t ${{ vars.GCLOUD_REGION }}-docker.pkg.dev/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REPO }}/${{ vars.GCLOUD_SERVICE_NAME }}:${{ github.sha }} .
+          docker build -t ${{ env.DOCKER_IMAGE_NAME }} .
 
       - name: Push image
         run: |
-          docker push ${{ vars.GCLOUD_REGION }}-docker.pkg.dev/${{ vars.GCLOUD_PROJECT_ID }}/${{ vars.GCLOUD_REPO }}/${{ vars.GCLOUD_SERVICE_NAME }}:${{ github.sha }}
+          docker push ${{ env.DOCKER_IMAGE_NAME }}
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ vars.GCLOUD_SERVICE_NAME }}
+          region: ${{ vars.GCLOUD_REGION }}
+          image: ${{ env.DOCKER_IMAGE_NAME }}
+          env_vars: |
+           NODE_ENV=production
+
+      - name: Log app URL
+        run: echo ${{ steps.deploy.outputs.url }}
