@@ -10,6 +10,7 @@ class _Document extends Document {
     return (
       <Html>
         <Head>
+          <link rel='icon' href='favicon.ico' />
           <link
             rel='stylesheet'
             href='https://unpkg.com/leaflet@1.9.3/dist/leaflet.css'
