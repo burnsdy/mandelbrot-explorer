@@ -18,8 +18,7 @@ const AboutModal = ({ opened, setOpened }: AboutModalProps) => {
     <Modal
       title={
         <Title order={3} color='dimmed'>
-          {/* Explaining the Mandelbrot Set */}
-          About the Mandelbrot Set
+          Explaining the Mandelbrot Set
         </Title>
       }
       size='xl'
