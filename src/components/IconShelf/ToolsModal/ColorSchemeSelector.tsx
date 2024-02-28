@@ -26,8 +26,10 @@ const ColorSchemeSelector = ({
     colorScheme[selectedInput]
   );
 
-  const randomColor = () =>
-    `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+  const randomColor = () => {
+    let digits = Math.floor(Math.random() * 0x1000000).toString(16);
+    return `#${('000000' + digits).slice(-6)}`;
+  };
 
   const getNextColorInput = (i: number) =>
     i === NUM_SELECTABLE_COLORS - 1 ? 0 : i + 1;
