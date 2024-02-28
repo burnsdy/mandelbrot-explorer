@@ -60,6 +60,8 @@ WORKDIR /usr/src/app
 
 COPY package.json ./
 
+COPY public ./public
+
 COPY --from=build /usr/src/app/.next ./.next
 
 COPY --from=deps /usr/src/app/node_modules ./node_modules
